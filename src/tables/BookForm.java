@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
 
-public class Book {
+public class BookForm {
 
 	private JFrame frame;
 	private JTextField name;
@@ -35,7 +35,7 @@ public class Book {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Book window = new Book();
+					BookForm window = new BookForm();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class Book {
 	/**
 	 * Create the application.
 	 */
-	public Book() {
+	public BookForm() {
 		initialize();
 	}
 

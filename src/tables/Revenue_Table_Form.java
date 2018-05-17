@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class Revenue_Table {
+public class Revenue_Table_Form {
 
 	private JFrame frame;
 
@@ -20,7 +20,7 @@ public class Revenue_Table {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Revenue_Table window = new Revenue_Table();
+					Revenue_Table_Form window = new Revenue_Table_Form();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +32,7 @@ public class Revenue_Table {
 	/**
 	 * Create the application.
 	 */
-	public Revenue_Table() {
+	public Revenue_Table_Form() {
 		initialize();
 	}
 

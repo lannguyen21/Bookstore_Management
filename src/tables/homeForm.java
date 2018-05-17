@@ -18,7 +18,7 @@ import javax.swing.UIManager;
 import java.awt.SystemColor;
 import java.awt.Button;
 
-public class home {
+public class homeForm {
 
 	private JFrame frame;
 
@@ -29,7 +29,7 @@ public class home {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					home window = new home();
+					homeForm window = new homeForm();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class home {
 	/**
 	 * Create the application.
 	 */
-	public home() {
+	public homeForm() {
 		initialize();
 	}
 
@@ -50,6 +50,9 @@ public class home {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//frame.setUndecorated(true);
+		//frame.setVisible(true);
 		frame.setForeground(SystemColor.activeCaption);
 		frame.getContentPane().setBackground(UIManager.getColor("window"));
 		frame.getContentPane().setLayout(null);

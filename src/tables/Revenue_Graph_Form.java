@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Button;
 
-public class Revenue_Graph {
+public class Revenue_Graph_Form {
 
 	private JFrame frame;
 
@@ -16,7 +16,7 @@ public class Revenue_Graph {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Revenue_Graph window = new Revenue_Graph();
+					Revenue_Graph_Form window = new Revenue_Graph_Form();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -28,7 +28,7 @@ public class Revenue_Graph {
 	/**
 	 * Create the application.
 	 */
-	public Revenue_Graph() {
+	public Revenue_Graph_Form() {
 		initialize();
 	}
 

@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login {
+public class LoginForm {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -24,7 +24,7 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
+					LoginForm window = new LoginForm();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginForm() {
 		initialize();
 	}
 
