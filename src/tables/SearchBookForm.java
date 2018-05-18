@@ -13,6 +13,14 @@ public class SearchBookForm {
 	private JFrame frame;
 	private JTextField textBookID;
 
+	public JTextField getTextBookID() {
+		return textBookID;
+	}
+
+	public void setTextBookID(JTextField textBookID) {
+		this.textBookID = textBookID;
+	}
+
 	/**
 	 * Launch the application.
 	 */
