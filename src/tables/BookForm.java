@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ScrollPaneConstants;
 
 
 
@@ -34,8 +35,8 @@ public class BookForm {
 		this.bookinfo = bookinfo;
 	}
 
-	private JTextField name;
-	private JTextField bookID;
+	private JTextField Name;
+	private JTextField BookID;
 	private JTextField Author;
 	private JTextField Publisher;
 	private JTextField quantity;
@@ -53,7 +54,7 @@ public class BookForm {
 	/**
 	 * Launch the application.
 	 */
-	public static void main1(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
@@ -78,7 +79,7 @@ public class BookForm {
 
 
 	
-	 public static void main(String[] args) {
+	 /*public static void main(String[] args) {
 		Connection con = null;
 		Statement st = null;
 		try {
@@ -93,26 +94,26 @@ public class BookForm {
 			System.out.println("Creating statement...");
 			st = con.createStatement();
 			String sql;
-			sql = "SELECT Num, BookID, BookName, Author, BookType, Publisher FROM BookInfo";
+			sql = "SELECT BookID, BookName, Author, BookType, Publisher, Quantity FROM BookInfo";
 			ResultSet rs = st.executeQuery(sql);
 
 			// STEP 5: Extract data from result set
 			while (rs.next()) {
 				// Retrieve by column name
-				int Num = rs.getInt("Num");
 				int BookID = rs.getInt("BookID");
 				String BookName = rs.getString("BookName");
 				String Author = rs.getString("Author");
 				String BookType = rs.getString("BookType");
 				String Publisher = rs.getString("Publisher");
+				int Quantity = rs.getInt("Quantity");
 
 				// Display values
-				System.out.print("Number: " + Num);
 				System.out.print(", BookID: " + BookID);
 				System.out.print(", BookName: " + BookName);
 				System.out.print(", Author: " + Author);
 				System.out.print(", BookType: " + BookType);
 				System.out.println(", Publisher: " + Publisher);
+				System.out.print("Quantity: " + Quantity);
 			}
 			// STEP 6: Clean-up environment
 			rs.close();
@@ -151,9 +152,8 @@ public class BookForm {
 				}
 			}
 		});
-		
-	}
-	
+	 }
+	*/
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -192,15 +192,20 @@ public class BookForm {
 		lblQuantity.setBounds(36, 316, 69, 20);
 		bookinfo.getContentPane().add(lblQuantity);
 		
-		name = new JTextField();
-		name.setBounds(123, 83, 198, 26);
-		bookinfo.getContentPane().add(name);
-		name.setColumns(10);
+		JLabel fillID = new JLabel("");
+		fillID.setForeground(Color.RED);
+		fillID.setBounds(129, 152, 228, 32);
+		bookinfo.getContentPane().add(fillID);
 		
-		bookID = new JTextField();
-		bookID.setBounds(123, 132, 198, 26);
-		bookinfo.getContentPane().add(bookID);
-		bookID.setColumns(10);
+		Name = new JTextField();
+		Name.setBounds(123, 83, 198, 26);
+		bookinfo.getContentPane().add(Name);
+		Name.setColumns(10);
+		
+		BookID = new JTextField();
+		BookID.setBounds(123, 132, 198, 26);
+		bookinfo.getContentPane().add(BookID);
+		BookID.setColumns(10);
 		
 		Author = new JTextField();
 		Author.setBounds(123, 180, 198, 26);
@@ -223,6 +228,42 @@ public class BookForm {
 		Type.setColumns(10);
 		
 		Button btnAdd = new Button("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fillID.setText("");
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				if(!BookID.getText().trim().equals(""))
+				{
+				model.addRow(new Object[] {Name.getText(), BookID.getText(), Author.getText(), Publisher.getText(), Type.getText(), quantity.getText()});
+				}
+				else {
+					fillID.setText("BookID must be filled");
+				}
+				
+				Connection c = null;
+				PreparedStatement ps = null;
+				
+				ConnectionSQL conn = new ConnectionSQL();	
+				BookInfo b = new BookInfo();
+				
+				String sql = "Insert into BookInfo(Name, BookID, Author, BookType, Publisher, Quantity) values (?, ?, ?, ?, ?, ?)";
+				try {
+					c = conn.getConnection();
+					ps = c.prepareStatement(sql);
+					ps.setString(1, b.getName());
+					ps.setInt(2, b.getBookID());					
+					ps.setString(3, b.getAuthor());
+					ps.setString(4, b.getType());
+					ps.setString(5, b.getPublisher());
+					ps.setInt(6, b.getQuantity());
+					System.out.println("add thanh cong");
+					
+				} catch (Exception ex) {
+					 ex.printStackTrace();
+					 System.out.println("Khong add duoc");
+				}
+			}
+		});
 		btnAdd.setBackground(new Color(245, 255, 250));
 		btnAdd.setBounds(36, 377, 91, 27);
 		bookinfo.getContentPane().add(btnAdd);
@@ -240,7 +281,7 @@ public class BookForm {
 				BookInfo b = new BookInfo();
 				try {
 				 c = DriverManager.getConnection("jdbc:sqlserver://localhost;DatabaseName=QLS", "root", "kannakamui");
-				 ps = c.prepareStatement("Delete From Books where id = ?");
+				 ps = c.prepareStatement("Delete From BookInfo where id = ?");
 				 ps.setInt(1, b.getBookID());
 				 ret = ps.executeUpdate();
 				 if (ret != -1) {
@@ -284,29 +325,27 @@ public class BookForm {
 		
 		JPanel panelTable = new JPanel();
 		panelTable.setToolTipText("Table");
-		panelTable.setBounds(394, 28, 474, 419);
+		panelTable.setBounds(363, 28, 505, 419);
 		bookinfo.getContentPane().add(panelTable);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		panelTable.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"No.", "BookID", "Name", "Author", "Type", "Publisher"
+				"Name", "BookID", "Author", "Type", "Publisher", "Quantity"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(40);
-		table.getColumnModel().getColumn(1).setPreferredWidth(85);
-		table.getColumnModel().getColumn(2).setPreferredWidth(113);
-		table.getColumnModel().getColumn(3).setPreferredWidth(97);
+		table.getColumnModel().getColumn(0).setPreferredWidth(137);
+		table.getColumnModel().getColumn(1).setPreferredWidth(91);
+		table.getColumnModel().getColumn(2).setPreferredWidth(106);
+		table.getColumnModel().getColumn(3).setPreferredWidth(92);
 		table.getColumnModel().getColumn(4).setPreferredWidth(82);
-		table.getColumnModel().getColumn(5).setPreferredWidth(93);
+		table.getColumnModel().getColumn(5).setPreferredWidth(73);
 		scrollPane.setViewportView(table);
 		
 		Button returnHome = new Button("Return");

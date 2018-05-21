@@ -1,32 +1,40 @@
 package tables;
 
 public class BookInfo {
-	private int No;
 	private int bookID;
 	private String name;
 	private String author;
 	private String type;
 	private String publisher;
+	private int Quantity;
 	
+	public int getQuantity() {
+		return Quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		Quantity = quantity;
+	}
+
 	BookInfo(){
 	}
 
-	public BookInfo(int no, int bookID, String name, String author, String type, String publisher) {
+	public BookInfo(int quantity, int bookID, String name, String author, String type, String publisher) {
 		super();
-		No = no;
 		this.bookID = bookID;
 		this.name = name;
 		this.author = author;
 		this.type = type;
 		this.publisher = publisher;
+		Quantity = quantity;
 	}
 
 	public int getNo() {
-		return No;
+		return Quantity;
 	}
 
 	public void setNo(int no) {
-		No = no;
+		Quantity = no;
 	}
 
 	public int getBookID() {
