@@ -99,6 +99,17 @@ public class SellForm {
 		selling.getContentPane().add(Add);
 		
 		Button Search = new Button("Search");
+		Search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Search.addActionListener(this);
+				selling.setVisible(false);
+				if(arg0.getSource().equals(Search))
+				{
+					SearchBookForm sf = new SearchBookForm();
+					sf.getSearchf().setVisible(true);
+				}
+			}
+		});
 		Search.setBackground(new Color(240, 255, 255));
 		Search.setBounds(190, 281, 91, 27);
 		selling.getContentPane().add(Search);

@@ -62,6 +62,21 @@ public class Revenue_Table_Form {
 		lblRevenue.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 24));
 		lblRevenue.setBounds(141, 10, 392, 44);
 		revenue_table.getContentPane().add(lblRevenue);
+		
+		Button button = new Button("Return");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				button.addActionListener(this);
+				revenue_table.setVisible(false);
+				if(arg0.getSource().equals(button))
+				{
+					homeForm hf = new homeForm();
+					hf.getHome().setVisible(true);
+				}
+			}
+		});
+		button.setBounds(517, 10, 91, 27);
+		revenue_table.getContentPane().add(button);
 		revenue_table.setBounds(100, 100, 779, 545);
 		
 		revenue_table.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

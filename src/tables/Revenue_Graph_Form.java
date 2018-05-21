@@ -65,6 +65,21 @@ public class Revenue_Graph_Form {
 		});
 		btnTable.setBounds(656, 10, 91, 27);
 		revenue_graph.getContentPane().add(btnTable);
+		
+		Button button = new Button("Return");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				button.addActionListener(this);
+				revenue_graph.setVisible(false);
+				if(arg0.getSource().equals(button))
+				{
+					homeForm hf = new homeForm();
+					hf.getHome().setVisible(true);
+				}
+			}
+		});
+		button.setBounds(551, 10, 91, 27);
+		revenue_graph.getContentPane().add(button);
 	}
 
 }
