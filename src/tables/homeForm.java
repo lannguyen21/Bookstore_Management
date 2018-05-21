@@ -85,12 +85,34 @@ public class homeForm {
 		home.getContentPane().add(Book);
 		
 		Button sell = new Button("Selling");
+		sell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sell.addActionListener(this);
+				home.setVisible(false);
+				if(arg0.getSource().equals(sell))
+				{
+					SellForm sf = new SellForm();
+					sf.getSelling().setVisible(true);
+				}
+			}
+		});
 		sell.setBackground(new Color(152, 251, 152));
 		sell.setFont(new Font("Dialog", Font.ITALIC, 20));
 		sell.setBounds(556, 266, 239, 76);
 		home.getContentPane().add(sell);
 		
 		Button revenue = new Button("Revenue and Expenditure");
+		revenue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				revenue.addActionListener(this);
+				home.setVisible(false);
+				if(arg0.getSource().equals(revenue))
+				{
+					Revenue_Table_Form rtf = new Revenue_Table_Form();
+					rtf.getRevenue_table().setVisible(true);
+				}
+			}
+		});
 		revenue.setBackground(new Color(152, 251, 152));
 		revenue.setFont(new Font("Dialog", Font.ITALIC, 20));
 		revenue.setBounds(556, 399, 239, 76);

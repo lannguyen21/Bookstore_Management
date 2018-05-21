@@ -11,7 +11,7 @@ import java.awt.Font;
 
 public class Revenue_Table_Form {
 
-	private JFrame frame;
+	private JFrame revenue_table;
 
 	/**
 	 * Launch the application.
@@ -21,7 +21,7 @@ public class Revenue_Table_Form {
 			public void run() {
 				try {
 					Revenue_Table_Form window = new Revenue_Table_Form();
-					window.frame.setVisible(true);
+					window.revenue_table.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,24 +40,39 @@ public class Revenue_Table_Form {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setLayout(null);
+		revenue_table = new JFrame();
+		revenue_table.getContentPane().setLayout(null);
 		
 		Button btnGraph = new Button("Graph");
 		btnGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnGraph.addActionListener(this);
+				revenue_table.setVisible(false);
+				if(arg0.getSource().equals(btnGraph))
+				{
+					Revenue_Graph_Form rgf = new Revenue_Graph_Form();
+					rgf.getRevenue_graph().setVisible(true);
+				}
 			}
 		});
 		btnGraph.setBounds(628, 10, 119, 27);
-		frame.getContentPane().add(btnGraph);
+		revenue_table.getContentPane().add(btnGraph);
 		
 		JLabel lblRevenue = new JLabel("Revenue and Expenditure");
 		lblRevenue.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 24));
 		lblRevenue.setBounds(141, 10, 392, 44);
-		frame.getContentPane().add(lblRevenue);
-		frame.setBounds(100, 100, 779, 545);
+		revenue_table.getContentPane().add(lblRevenue);
+		revenue_table.setBounds(100, 100, 779, 545);
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		revenue_table.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public JFrame getRevenue_table() {
+		return revenue_table;
+	}
+
+	public void setRevenue_table(JFrame revenue_table) {
+		this.revenue_table = revenue_table;
 	}
 
 }

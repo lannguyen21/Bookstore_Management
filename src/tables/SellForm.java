@@ -8,10 +8,13 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.Button;
 import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SellForm {
 
-	private JFrame frame;
+	private JFrame selling;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -25,7 +28,7 @@ public class SellForm {
 			public void run() {
 				try {
 					SellForm window = new SellForm();
-					window.frame.setVisible(true);
+					window.selling.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,60 +47,84 @@ public class SellForm {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 813, 478);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		selling = new JFrame();
+		selling.setBounds(100, 100, 813, 478);
+		selling.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		selling.getContentPane().setLayout(null);
 		
 		Label sell = new Label("Selling Management");
 		sell.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 24));
 		sell.setBounds(51, 10, 353, 41);
-		frame.getContentPane().add(sell);
+		selling.getContentPane().add(sell);
 		
 		Label BookID = new Label("BookID");
 		BookID.setBounds(51, 69, 82, 27);
-		frame.getContentPane().add(BookID);
+		selling.getContentPane().add(BookID);
 		
 		Label Price = new Label("Price");
 		Price.setBounds(51, 119, 82, 27);
-		frame.getContentPane().add(Price);
+		selling.getContentPane().add(Price);
 		
 		Label Quantity = new Label("Quantity");
 		Quantity.setBounds(51, 172, 82, 27);
-		frame.getContentPane().add(Quantity);
+		selling.getContentPane().add(Quantity);
 		
 		Label Date = new Label("Date");
 		Date.setBounds(51, 224, 82, 27);
-		frame.getContentPane().add(Date);
+		selling.getContentPane().add(Date);
 		
 		textField = new JTextField();
 		textField.setBounds(135, 70, 195, 26);
-		frame.getContentPane().add(textField);
+		selling.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(135, 119, 195, 26);
-		frame.getContentPane().add(textField_1);
+		selling.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(135, 173, 195, 26);
-		frame.getContentPane().add(textField_2);
+		selling.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(135, 225, 195, 26);
-		frame.getContentPane().add(textField_3);
+		selling.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
 		Button Add = new Button("Add");
 		Add.setBackground(new Color(240, 255, 255));
 		Add.setBounds(51, 281, 91, 27);
-		frame.getContentPane().add(Add);
+		selling.getContentPane().add(Add);
 		
 		Button Search = new Button("Search");
 		Search.setBackground(new Color(240, 255, 255));
 		Search.setBounds(190, 281, 91, 27);
-		frame.getContentPane().add(Search);
+		selling.getContentPane().add(Search);
+		
+		JButton btnReturn = new JButton("Return");
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnReturn.addActionListener(this);
+				selling.setVisible(false);
+				if(arg0.getSource().equals(btnReturn))
+				{
+					homeForm hf = new homeForm();
+					hf.getHome().setVisible(true);
+				}
+			}
+		});
+		btnReturn.setBackground(new Color(245, 255, 250));
+		btnReturn.setBounds(51, 344, 91, 29);
+		selling.getContentPane().add(btnReturn);
+	}
+
+	public JFrame getSelling() {
+		return selling;
+	}
+
+	public void setSelling(JFrame selling) {
+		this.selling = selling;
 	}
 }
