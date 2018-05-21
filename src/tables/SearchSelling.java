@@ -69,7 +69,7 @@ public class SearchSelling {
 		search.setBounds(404, 100, 91, 27);
 		searchSell.getContentPane().add(search);
 		
-		Label searchSelling = new Label("Search Book");
+		Label searchSelling = new Label("Search Selling Book");
 		searchSelling.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 24));
 		searchSelling.setBounds(10, 26, 338, 48);
 		searchSell.getContentPane().add(searchSelling);

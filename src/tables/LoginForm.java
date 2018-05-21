@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Panel;
+import java.awt.Button;
 
 public class LoginForm {
 
@@ -57,7 +59,22 @@ public class LoginForm {
 		lblPassword.setBounds(84, 121, 107, 45);
 		login.getContentPane().add(lblPassword);
 		
-		JButton btnLogin = new JButton("Login");
+		textField = new JTextField();
+		textField.setBounds(206, 89, 225, 26);
+		login.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(206, 131, 225, 26);
+		login.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblBookstoreManagementLogin = new JLabel("Bookstore Management Login");
+		lblBookstoreManagementLogin.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		lblBookstoreManagementLogin.setBounds(80, 16, 423, 45);
+		login.getContentPane().add(lblBookstoreManagementLogin);
+		
+		Button btnLogin = new Button("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnLogin.addActionListener(this);
@@ -69,18 +86,8 @@ public class LoginForm {
 				}
 			}
 		});
-		btnLogin.setBounds(237, 195, 107, 29);
+		btnLogin.setBounds(206, 192, 91, 27);
 		login.getContentPane().add(btnLogin);
-		
-		textField = new JTextField();
-		textField.setBounds(206, 89, 225, 26);
-		login.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(206, 131, 225, 26);
-		login.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
 		login.setBounds(100, 100, 566, 342);
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
