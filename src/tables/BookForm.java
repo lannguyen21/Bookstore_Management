@@ -47,7 +47,7 @@ public class BookForm {
 
 	// Database credentials
 	static final String USER = "root";
-	static final String PASS = "kannakamui";
+	static final String PASS = "loveHime123";
 	
 	
 	/**
@@ -229,6 +229,8 @@ public class BookForm {
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+	
 				BookInfo book = new BookInfo();
 				
 				fillID.setText("");
@@ -297,12 +299,13 @@ public class BookForm {
 					} // end finally try
 				} // end try
 				System.out.println("Goodbye!");
-				
+				model.setRowCount(0);
 				ConnectionSQL conSQL = new ConnectionSQL();
 				try {
 					conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
 					
 					while(conSQL.rs.next()) {
+						
 						String BookName = conSQL.rs.getString(1);
 						int BookID = conSQL.rs.getInt(2);
 						String Author = conSQL.rs.getString(3);
@@ -313,6 +316,7 @@ public class BookForm {
 						Object[] content = {BookName, BookID, Author, Type, Publisher, Quantity};
 						
 						model.addRow(content);
+						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
