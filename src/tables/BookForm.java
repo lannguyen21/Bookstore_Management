@@ -227,13 +227,8 @@ public class BookForm {
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-<<<<<<< HEAD
+
                 BookInfo book = new BookInfo();
-=======
-				
-	
-				BookInfo book = new BookInfo();
->>>>>>> 6a872f434f436e1f48fe9c36296571a4f000c116
 				
 				fillID.setText("");
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
