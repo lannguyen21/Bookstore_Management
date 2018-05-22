@@ -14,7 +14,7 @@ public class ConnectionSQL {
 	static final String DB_URL = "jdbc:mysql://localhost:3306/QLS?autoReconnect=true&useSSL=false";
 
 	static final String USER = "root";
-	static final String PASS = "kannakamui";
+	static final String PASS = "loveHime123";
 	
 	public ConnectionSQL() {
 		sysConnect();
