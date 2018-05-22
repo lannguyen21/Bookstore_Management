@@ -125,7 +125,7 @@ public class homeForm {
 		lblBookstoreManagement.setBounds(203, 16, 676, 76);
 		home.getContentPane().add(lblBookstoreManagement);
 		
-		JLabel lblNewLabel = new JLabel("Revenue and Expenditure");
+		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Miko\\eclipse-workspace\\Bookstore_Management\\src\\background_home.png"));
 		lblNewLabel.setBounds(0, 0, 894, 505);
 		home.getContentPane().add(lblNewLabel);

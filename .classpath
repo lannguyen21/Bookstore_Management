@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="lib" path="C:/Users/DELL/Desktop/mysql-connector-java-8.0.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miko/eclipse-workspace/Bookstore_Management/src/Bookstore_Management.sql"/>
+	<classpathentry kind="lib" path="D:/Downloads/mysql-connector-java-8.0.11.zip"/>
+	<classpathentry kind="lib" path="D:/Downloads/mysql-connector-java-8.0.11-sample/mysql-connector-java-8.0.11/mysql-connector-java-8.0.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
