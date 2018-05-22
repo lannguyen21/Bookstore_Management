@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Color;
 
 public class SearchBookForm {
 
@@ -69,6 +70,7 @@ public class SearchBookForm {
 	 */
 	private void initialize() {
 		searchf = new JFrame();
+		searchf.getContentPane().setBackground(new Color(250, 240, 230));
 		searchf.setBounds(100, 100, 702, 519);
 		searchf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		searchf.getContentPane().setLayout(null);
@@ -179,6 +181,7 @@ public class SearchBookForm {
 		searchf.getContentPane().add(btnBook);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(250, 240, 230));
 		panel.setBounds(15, 147, 655, 316);
 		searchf.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -188,6 +191,7 @@ public class SearchBookForm {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.setBackground(new Color(250, 240, 230));
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {

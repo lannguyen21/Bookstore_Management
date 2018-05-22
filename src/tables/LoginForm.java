@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Button;
+import java.awt.Color;
 
 public class LoginForm {
 
@@ -44,6 +45,7 @@ public class LoginForm {
 	 */
 	private void initialize() {
 		login = new JFrame();
+		login.getContentPane().setBackground(new Color(250, 240, 230));
 		login.getContentPane().setLayout(null);
 		login.getContentPane().setLayout(null);
 		

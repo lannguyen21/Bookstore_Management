@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Color;
 
 public class SearchSelling {
 
@@ -68,6 +69,7 @@ public class SearchSelling {
 	 */
 	private void initialize() {
 		searchSell = new JFrame();
+		searchSell.getContentPane().setBackground(new Color(250, 240, 230));
 		searchSell.setBounds(100, 100, 702, 519);
 		searchSell.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		searchSell.getContentPane().setLayout(null);
@@ -174,6 +176,7 @@ public class SearchSelling {
 		searchSell.getContentPane().add(selling);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(250, 240, 230));
 		panel.setBounds(15, 146, 637, 317);
 		searchSell.getContentPane().add(panel);
 		panel.setLayout(null);

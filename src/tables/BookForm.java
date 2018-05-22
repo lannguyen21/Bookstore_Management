@@ -156,6 +156,7 @@ public class BookForm {
 	 */
 	private void initialize() {
 		bookinfo = new JFrame();
+		bookinfo.getContentPane().setBackground(new Color(250, 240, 230));
 		bookinfo.setBounds(100, 100, 905, 519);
 		bookinfo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		bookinfo.getContentPane().setLayout(null);
@@ -397,6 +398,7 @@ public class BookForm {
 		bookinfo.getContentPane().add(btnSearch);
 		
 		JPanel panelTable = new JPanel();
+		panelTable.setBackground(new Color(250, 240, 230));
 		panelTable.setToolTipText("Table");
 		panelTable.setBounds(363, 16, 520, 431);
 		bookinfo.getContentPane().add(panelTable);

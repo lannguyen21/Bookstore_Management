@@ -68,6 +68,7 @@ public class SellForm {
 	 */
 	private void initialize() {
 		selling = new JFrame();
+		selling.getContentPane().setBackground(new Color(250, 240, 230));
 		selling.setBounds(100, 100, 813, 478);
 		selling.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		selling.getContentPane().setLayout(null);
@@ -294,6 +295,7 @@ public class SellForm {
 		selling.getContentPane().add(btnDelete);
 		
 		JPanel panelTable = new JPanel();
+		panelTable.setBackground(new Color(250, 240, 230));
 		panelTable.setToolTipText("Table");
 		panelTable.setBounds(335, 10, 533, 437);
 		selling.getContentPane().add(panelTable);

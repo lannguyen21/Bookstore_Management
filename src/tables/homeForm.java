@@ -79,7 +79,7 @@ public class homeForm {
 				}
 			}
 		});
-		Book.setBackground(new Color(152, 251, 152));
+		Book.setBackground(new Color(255, 222, 173));
 		Book.setFont(new Font("Dialog", Font.ITALIC, 20));
 		Book.setBounds(556, 140, 249, 76);
 		home.getContentPane().add(Book);
@@ -96,7 +96,7 @@ public class homeForm {
 				}
 			}
 		});
-		sell.setBackground(new Color(152, 251, 152));
+		sell.setBackground(new Color(255, 222, 173));
 		sell.setFont(new Font("Dialog", Font.ITALIC, 20));
 		sell.setBounds(556, 266, 239, 76);
 		home.getContentPane().add(sell);
@@ -113,21 +113,21 @@ public class homeForm {
 				}
 			}
 		});
-		revenue.setBackground(new Color(152, 251, 152));
+		revenue.setBackground(new Color(255, 228, 181));
 		revenue.setFont(new Font("Dialog", Font.ITALIC, 20));
 		revenue.setBounds(556, 399, 239, 76);
 		home.getContentPane().add(revenue);
 		
 		JLabel lblBookstoreManagement = new JLabel("Bookstore Management");
-		lblBookstoreManagement.setForeground(new Color(60, 179, 113));
+		lblBookstoreManagement.setForeground(new Color(144, 238, 144));
 		lblBookstoreManagement.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBookstoreManagement.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 60));
 		lblBookstoreManagement.setBounds(203, 16, 676, 76);
 		home.getContentPane().add(lblBookstoreManagement);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Miko\\eclipse-workspace\\Bookstore_Management\\src\\background_home.png"));
-		lblNewLabel.setBounds(0, 0, 894, 505);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Miko\\eclipse-workspace\\Bookstore_Management\\src\\home-cp.jpg"));
+		lblNewLabel.setBounds(0, 0, 936, 534);
 		home.getContentPane().add(lblNewLabel);
 	}
 }
