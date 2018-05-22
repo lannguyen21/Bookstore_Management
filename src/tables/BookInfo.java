@@ -16,7 +16,7 @@ public class BookInfo {
 		Quantity = quantity;
 	}
 
-	BookInfo(){
+	public BookInfo(){
 	}
 
 	public BookInfo(int quantity, int bookID, String name, String author, String type, String publisher) {
@@ -41,8 +41,8 @@ public class BookInfo {
 		return bookID;
 	}
 
-	public void setBookID(int bookID) {
-		this.bookID = bookID;
+	public void setBookID(int string) {
+		this.bookID = string;
 	}
 
 	public String getName() {

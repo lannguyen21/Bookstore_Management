@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -79,7 +78,7 @@ public class BookForm {
 
 
 	
-	 /*public static void main(String[] args) {
+	 /*public static void main1(String[] args) {
 		Connection con = null;
 		Statement st = null;
 		try {
@@ -152,8 +151,8 @@ public class BookForm {
 				}
 			}
 		});
-	 }
-	*/
+	 }*/
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -230,37 +229,94 @@ public class BookForm {
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				BookInfo book = new BookInfo();
+				
 				fillID.setText("");
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				if(!BookID.getText().trim().equals(""))
 				{
-				model.addRow(new Object[] {Name.getText(), BookID.getText(), Author.getText(), Publisher.getText(), Type.getText(), quantity.getText()});
+				//model.addRow(new Object[] {Name.getText(), BookID.getText(), Author.getText(), Publisher.getText(), Type.getText(), quantity.getText()});
+				book.setName(Name.getText());
+				book.setBookID(Integer.parseInt(BookID.getText()));
+				book.setAuthor(Author.getText());
+				book.setPublisher(Publisher.getText());
+				book.setType(Type.getText());
+				book.setQuantity(Integer.parseInt(quantity.getText()));
 				}
 				else {
 					fillID.setText("BookID must be filled");
 				}
 				
-				Connection c = null;
-				PreparedStatement ps = null;
-				
-				ConnectionSQL conn = new ConnectionSQL();	
-				BookInfo b = new BookInfo();
-				
-				String sql = "Insert into BookInfo(Name, BookID, Author, BookType, Publisher, Quantity) values (?, ?, ?, ?, ?, ?)";
+				Connection con = null;
+				PreparedStatement st = null;
 				try {
-					c = conn.getConnection();
-					ps = c.prepareStatement(sql);
-					ps.setString(1, b.getName());
-					ps.setInt(2, b.getBookID());					
-					ps.setString(3, b.getAuthor());
-					ps.setString(4, b.getType());
-					ps.setString(5, b.getPublisher());
-					ps.setInt(6, b.getQuantity());
-					System.out.println("add thanh cong");
+					// STEP 2: Register JDBC driver
+					Class.forName("com.mysql.jdbc.Driver");
+
+					// STEP 3: Open a connection
+					System.out.println("Connecting to database...");
+					con = DriverManager.getConnection(DB_URL,USER , PASS);
+
+					// STEP 4: Execute a query
+					System.out.println("Creating statement...");
+					String sql;
+					sql = "Insert into BookInfo (BookName, BookID, Author, BookType, Publisher, Quantity) values (?, ?, ?, ?, ?, ?)";
+					st = con.prepareStatement(sql);					
 					
-				} catch (Exception ex) {
-					 ex.printStackTrace();
-					 System.out.println("Khong add duoc");
+					st.setInt(2, book.getBookID());
+					st.setString(1, book.getName());
+					st.setString(3, book.getAuthor());
+					st.setString(4, book.getType());
+					st.setString(5, book.getPublisher());
+					st.setInt(6, book.getQuantity());
+					int rs = st.executeUpdate();
+					
+					if (rs != -1) {
+						  JOptionPane.showMessageDialog(btnAdd, "This book has been added");  
+						 }
+					st.close();
+					con.close();
+				} catch (SQLException se) {
+					// Handle errors for JDBC
+					se.printStackTrace();
+				} catch (Exception e) {
+					// Handle errors for Class.forName
+					e.printStackTrace();
+				} finally {
+					// finally block used to close resources
+					try {
+						if (st != null)
+							st.close();
+					} catch (SQLException se2) {
+					} // nothing we can do
+					try {
+						if (con != null)
+							con.close();
+					} catch (SQLException se) {
+						se.printStackTrace();
+					} // end finally try
+				} // end try
+				System.out.println("Goodbye!");
+				
+				ConnectionSQL conSQL = new ConnectionSQL();
+				try {
+					conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
+					
+					while(conSQL.rs.next()) {
+						String BookName = conSQL.rs.getString(1);
+						int BookID = conSQL.rs.getInt(2);
+						String Author = conSQL.rs.getString(3);
+						String Type = conSQL.rs.getString(4);
+						String Publisher = conSQL.rs.getString(5);
+						int Quantity = conSQL.rs.getInt(6);
+						
+						Object[] content = {BookName, BookID, Author, Type, Publisher, Quantity};
+						
+						model.addRow(content);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
@@ -271,35 +327,45 @@ public class BookForm {
 		Button btnDelete = new Button("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int ret = JOptionPane.showConfirmDialog(btnDelete, "Do you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
-				if(ret != JOptionPane.YES_OPTION) {
-				 return;
-				}
-
-				Connection c = null;
-				PreparedStatement ps = null;
-				BookInfo b = new BookInfo();
+				BookInfo book = new BookInfo();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				book.setBookID(Integer.parseInt(BookID.getText()));
+				
+				ConnectionSQL conSQL = new ConnectionSQL();
+				Connection con = null;
+				PreparedStatement st = null;
 				try {
-				 c = DriverManager.getConnection("jdbc:sqlserver://localhost;DatabaseName=QLS", "root", "kannakamui");
-				 ps = c.prepareStatement("Delete From BookInfo where id = ?");
-				 ps.setInt(1, b.getBookID());
-				 ret = ps.executeUpdate();
-				 if (ret != -1) {
-				  JOptionPane.showMessageDialog(btnDelete, "This book has been deleted");  
-				 }
-				} catch (Exception ex) {
-				 ex.printStackTrace();
-				} finally {
-				  try {
-				   if (c != null) {
-				     c.close();
-				   }
-				   if (ps != null) {
-				     ps.close();
-				   }
-				 } catch (Exception ex2) {
-				   ex2.printStackTrace();
-				 }
+					Class.forName("com.mysql.jdbc.Driver");
+
+					con = DriverManager.getConnection(DB_URL,USER , PASS);
+
+					String sql = "Delete from BookInfo where BookID = ?";
+					st = con.prepareStatement(sql);		
+					st.setInt(1, Integer.parseInt(BookID.getText()));
+					st.execute();
+                    int rs = st.executeUpdate();
+					
+					if (rs != -1) {
+						  JOptionPane.showMessageDialog(btnAdd, "This book has been deleted");  
+						 }
+					st.close();
+					con.close();
+				}catch (Exception e)
+			    {
+				      System.err.println("Got an exception! ");
+				      System.err.println(e.getMessage());
+				    }
+				
+				try {
+					conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
+					
+					while(conSQL.rs.next()) {
+						int BookID = conSQL.rs.getInt(2);
+						model.removeRow(BookID);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
