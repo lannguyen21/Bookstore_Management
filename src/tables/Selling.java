@@ -1,18 +1,10 @@
 package tables;
 
 public class Selling {
-	private int No;
 	private int bookID;
 	private int price;
 	private int quantity;
 	private String date;
-	
-	public int getNo() {
-		return No;
-	}
-	public void setNo(int no) {
-		No = no;
-	}
 	
 	public int getBookID() {
 		return bookID;

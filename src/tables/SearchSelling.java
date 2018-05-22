@@ -4,11 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Label;
 import java.awt.Font;
 import java.awt.Button;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class SearchSelling {
 
@@ -21,7 +31,14 @@ public class SearchSelling {
 		this.searchSell = searchSell;
 	}
 
-	private JTextField textField;
+	private JTextField textBookID;
+	private JTable table;
+	
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/QLS?autoReconnect=true&useSSL=false";
+
+	static final String USER = "root";
+	static final String PASS = "kannakamui";
 
 	/**
 	 * Launch the application.
@@ -55,10 +72,10 @@ public class SearchSelling {
 		searchSell.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		searchSell.getContentPane().setLayout(null);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(114, 100, 257, 27);
-		searchSell.getContentPane().add(textField);
+		textBookID = new JTextField();
+		textBookID.setColumns(10);
+		textBookID.setBounds(114, 100, 257, 27);
+		searchSell.getContentPane().add(textBookID);
 		
 		Label bookID = new Label("BookID");
 		bookID.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -66,12 +83,64 @@ public class SearchSelling {
 		searchSell.getContentPane().add(bookID);
 		
 		Button search = new Button("Search");
+		search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				
+				Connection con = null;
+				PreparedStatement st = null;
+				
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+
+					con = DriverManager.getConnection(DB_URL,USER , PASS);
+
+					String sql;
+					sql = "select * from Selling where BookID = ?";
+					st = con.prepareStatement(sql);
+					st.setString(1, textBookID.getText());
+					ResultSet rs = st.executeQuery();
+					
+					model.setRowCount(0);
+					try {	
+						while(rs.next()) {
+							int BookID = rs.getInt(1);
+							int Price = rs.getInt(2);
+							int Quantity = rs.getInt(3);
+							String Date = rs.getString(4);
+							
+							Object[] content = {BookID, Price, Quantity, Date};
+							
+							model.addRow(content);
+							}
+						} catch(Exception e) {
+							e.printStackTrace();
+					}
+				} catch (SQLException se) {
+					se.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (st != null)
+							st.close();
+					} catch (SQLException se2) {
+					}
+					try {
+						if (con != null)
+							con.close();
+					} catch (SQLException se) {
+						se.printStackTrace();
+					}
+				}
+			}
+		});
 		search.setBounds(404, 100, 91, 27);
 		searchSell.getContentPane().add(search);
 		
 		Label searchSelling = new Label("Search Selling Book");
 		searchSelling.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 24));
-		searchSelling.setBounds(10, 26, 338, 48);
+		searchSelling.setBounds(29, 26, 319, 48);
 		searchSell.getContentPane().add(searchSelling);
 		
 		Button returnHome = new Button("Return Home");
@@ -103,5 +172,29 @@ public class SearchSelling {
 		});
 		selling.setBounds(369, 10, 126, 27);
 		searchSell.getContentPane().add(selling);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(15, 146, 637, 317);
+		searchSell.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(15, 5, 607, 322);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"BookID", "Price", "Quantity", "Dates"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(137);
+		table.getColumnModel().getColumn(1).setPreferredWidth(91);
+		table.getColumnModel().getColumn(2).setPreferredWidth(106);
+		table.getColumnModel().getColumn(3).setPreferredWidth(92);
+		scrollPane.setViewportView(table);
 	}
 }

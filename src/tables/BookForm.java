@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JFrame;
 import java.awt.*;
@@ -40,12 +39,11 @@ public class BookForm {
 	private JTextField Publisher;
 	private JTextField quantity;
 	private JTextField Type;
-	private JTable table;
+	private static JTable table;
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/QLS?autoReconnect=true&useSSL=false";
 
-	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "kannakamui";
 	
@@ -229,7 +227,7 @@ public class BookForm {
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BookInfo book = new BookInfo();
+                BookInfo book = new BookInfo();
 				
 				fillID.setText("");
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -250,14 +248,11 @@ public class BookForm {
 				Connection con = null;
 				PreparedStatement st = null;
 				try {
-					// STEP 2: Register JDBC driver
 					Class.forName("com.mysql.jdbc.Driver");
 
-					// STEP 3: Open a connection
 					System.out.println("Connecting to database...");
 					con = DriverManager.getConnection(DB_URL,USER , PASS);
 
-					// STEP 4: Execute a query
 					System.out.println("Creating statement...");
 					String sql;
 					sql = "Insert into BookInfo (BookName, BookID, Author, BookType, Publisher, Quantity) values (?, ?, ?, ?, ?, ?)";
@@ -297,12 +292,13 @@ public class BookForm {
 					} // end finally try
 				} // end try
 				System.out.println("Goodbye!");
-				
+				model.setRowCount(0);
 				ConnectionSQL conSQL = new ConnectionSQL();
 				try {
 					conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
 					
 					while(conSQL.rs.next()) {
+						
 						String BookName = conSQL.rs.getString(1);
 						int BookID = conSQL.rs.getInt(2);
 						String Author = conSQL.rs.getString(3);
@@ -313,6 +309,7 @@ public class BookForm {
 						Object[] content = {BookName, BookID, Author, Type, Publisher, Quantity};
 						
 						model.addRow(content);
+						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -320,7 +317,7 @@ public class BookForm {
 				}
 			}
 		});
-		btnAdd.setBackground(new Color(245, 255, 250));
+		btnAdd.setBackground(SystemColor.menu);
 		btnAdd.setBounds(36, 377, 91, 27);
 		bookinfo.getContentPane().add(btnAdd);
 		
@@ -346,7 +343,7 @@ public class BookForm {
                     int rs = st.executeUpdate();
 					
 					if (rs != -1) {
-						  JOptionPane.showMessageDialog(btnAdd, "This book has been deleted");  
+						  JOptionPane.showMessageDialog(btnDelete, "This book has been deleted");  
 						 }
 					st.close();
 					con.close();
@@ -356,12 +353,21 @@ public class BookForm {
 				      System.err.println(e.getMessage());
 				    }
 				
+				model.setRowCount(0);
 				try {
 					conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
 					
 					while(conSQL.rs.next()) {
+						String BookName = conSQL.rs.getString(1);
 						int BookID = conSQL.rs.getInt(2);
-						model.removeRow(BookID);
+						String Author = conSQL.rs.getString(3);
+						String Type = conSQL.rs.getString(4);
+						String Publisher = conSQL.rs.getString(5);
+						int Quantity = conSQL.rs.getInt(6);
+						
+						Object[] content = {BookName, BookID, Author, Type, Publisher, Quantity};
+						
+						model.addRow(content);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -369,7 +375,7 @@ public class BookForm {
 				}
 			}
 		});
-		btnDelete.setBackground(new Color(245, 255, 250));
+		btnDelete.setBackground(SystemColor.menu);
 		btnDelete.setBounds(150, 377, 91, 27);
 		bookinfo.getContentPane().add(btnDelete);
 		
@@ -385,16 +391,18 @@ public class BookForm {
 				}
 			}
 		});
-		btnSearch.setBackground(new Color(245, 255, 250));
+		btnSearch.setBackground(SystemColor.menu);
 		btnSearch.setBounds(266, 377, 91, 27);
 		bookinfo.getContentPane().add(btnSearch);
 		
 		JPanel panelTable = new JPanel();
 		panelTable.setToolTipText("Table");
-		panelTable.setBounds(363, 28, 505, 419);
+		panelTable.setBounds(363, 16, 520, 431);
 		bookinfo.getContentPane().add(panelTable);
+		panelTable.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(15, 5, 505, 452);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		panelTable.add(scrollPane);
 		
@@ -426,7 +434,7 @@ public class BookForm {
 				}
 			}
 		});
-		returnHome.setBackground(new Color(240, 248, 255));
+		returnHome.setBackground(SystemColor.menu);
 		returnHome.setBounds(150, 427, 91, 26);
 		bookinfo.getContentPane().add(returnHome);
 	}

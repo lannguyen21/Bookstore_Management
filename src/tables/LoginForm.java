@@ -86,7 +86,7 @@ public class LoginForm {
 		});
 		btnLogin.setBounds(206, 192, 91, 27);
 		login.getContentPane().add(btnLogin);
-		login.setBounds(100, 100, 566, 342);
+		login.setBounds(100, 100, 566, 309);
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
