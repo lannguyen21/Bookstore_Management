@@ -22,7 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.SystemColor;
+import javax.swing.JLabel;
 
 public class SellForm {
 
@@ -38,6 +40,7 @@ public class SellForm {
 
 	static final String USER = "root";
 	static final String PASS = "kannakamui";
+	private JTextField textSell;
 	
 
 	/**
@@ -79,43 +82,45 @@ public class SellForm {
 		selling.getContentPane().add(sell);
 		
 		Label BookID = new Label("BookID");
-		BookID.setBounds(51, 69, 82, 27);
+		BookID.setBounds(37, 123, 82, 27);
 		selling.getContentPane().add(BookID);
 		
 		Label Price = new Label("Price");
-		Price.setBounds(51, 119, 82, 27);
+		Price.setBounds(37, 173, 82, 27);
 		selling.getContentPane().add(Price);
 		
 		Label Quantity = new Label("Quantity");
-		Quantity.setBounds(51, 172, 82, 27);
+		Quantity.setBounds(37, 226, 82, 27);
 		selling.getContentPane().add(Quantity);
 		
 		Label Date = new Label("Date");
-		Date.setBounds(51, 224, 82, 27);
+		Date.setBounds(37, 278, 82, 27);
 		selling.getContentPane().add(Date);
 		
 		Label fillID = new Label("");
 		fillID.setForeground(Color.RED);
-		fillID.setBounds(139, 97, 157, 20);
+		fillID.setBounds(139, 103, 157, 20);
 		selling.getContentPane().add(fillID);
 		
 		bookID = new JTextField();
-		bookID.setBounds(135, 70, 195, 26);
+		bookID.setBounds(121, 124, 195, 26);
 		selling.getContentPane().add(bookID);
 		bookID.setColumns(10);
 		
 		price = new JTextField();
-		price.setBounds(135, 119, 195, 26);
+		price.setBounds(121, 173, 195, 26);
 		selling.getContentPane().add(price);
 		price.setColumns(10);
 		
 		quantity = new JTextField();
-		quantity.setBounds(135, 173, 195, 26);
+		quantity.setBounds(121, 227, 195, 26);
 		selling.getContentPane().add(quantity);
 		quantity.setColumns(10);
 		
+		
+		
 		date = new JTextField();
-		date.setBounds(135, 225, 195, 26);
+		date.setBounds(121, 279, 195, 26);
 		selling.getContentPane().add(date);
 		date.setColumns(10);
 		
@@ -128,13 +133,14 @@ public class SellForm {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				if(!bookID.getText().trim().equals(""))
 				{
-				sell.setBookID(Integer.parseInt(bookID.getText()));
-				sell.setPrice(Integer.parseInt(price.getText()));
-				sell.setQuantity(Integer.parseInt(quantity.getText()));
-				sell.setDate(date.getText());
+					sell.setSellID(Integer.parseInt(textSell.getText()));
+					sell.setBookID(Integer.parseInt(bookID.getText()));
+					sell.setPrice(Integer.parseInt(price.getText()));
+					sell.setQuantity(Integer.parseInt(quantity.getText()));
+					sell.setDate(date.getText());
 				}
 				else {
-					fillID.setText("BookID must be filled");
+					fillID.setText("Sell_ID must be filled");
 				}
 				
 				Connection con = null;
@@ -145,16 +151,16 @@ public class SellForm {
 					System.out.println("Connecting to database...");
 					con = DriverManager.getConnection(DB_URL,USER , PASS);
 
-					// STEP 4: Execute a query
 					System.out.println("Creating statement...");
 					String sql;
-					sql = "Insert into Selling (BookID, Price, Quantity, Dates) values (?, ?, ?, ?)";
+					sql = "Insert into Selling (SellID, BookID, Price, Quantity, Dates) values (?, ?, ?, ?, ?)";
 					st = con.prepareStatement(sql);					
 					
-					st.setInt(1, sell.getBookID());
-					st.setInt(2, sell.getPrice());
-					st.setInt(3, sell.getQuantity());
-					st.setString(4, sell.getDate());
+					st.setInt(1, sell.getSellID());
+					st.setInt(2, sell.getBookID());
+					st.setInt(3, sell.getPrice());
+					st.setInt(4, sell.getQuantity());
+					st.setString(5, sell.getDate());
 					
 					int rs = st.executeUpdate();
 					
@@ -187,12 +193,13 @@ public class SellForm {
 					
 					while(conSQL.rs.next()) {
 						
-						int BookID = conSQL.rs.getInt(1);
-						int Price = conSQL.rs.getInt(2);
-						int Quantity = conSQL.rs.getInt(3);
-						String Date = conSQL.rs.getString(4);
+						int SellID = conSQL.rs.getInt(1);
+						int BookID = conSQL.rs.getInt(2);
+						int Price = conSQL.rs.getInt(3);
+						int Quantity = conSQL.rs.getInt(4);
+						String Date = conSQL.rs.getString(5);
 						
-						Object[] content = {BookID, Price, Quantity, Date};
+						Object[] content = {SellID, BookID, Price, Quantity, Date};
 						
 						model.addRow(content);
 						
@@ -204,7 +211,7 @@ public class SellForm {
 			}
 		});
 		Add.setBackground(SystemColor.menu);
-		Add.setBounds(42, 281, 91, 27);
+		Add.setBounds(37, 334, 91, 27);
 		selling.getContentPane().add(Add);
 		
 		Button Search = new Button("Search");
@@ -220,7 +227,7 @@ public class SellForm {
 			}
 		});
 		Search.setBackground(SystemColor.menu);
-		Search.setBounds(240, 281, 91, 27);
+		Search.setBounds(243, 334, 91, 27);
 		selling.getContentPane().add(Search);
 		
 		JButton btnReturn = new JButton("Return");
@@ -236,7 +243,7 @@ public class SellForm {
 			}
 		});
 		btnReturn.setBackground(SystemColor.menu);
-		btnReturn.setBounds(51, 344, 91, 29);
+		btnReturn.setBounds(51, 377, 91, 29);
 		selling.getContentPane().add(btnReturn);
 		
 		Button btnDelete = new Button("Delete");
@@ -244,7 +251,7 @@ public class SellForm {
 			public void actionPerformed(ActionEvent arg0) {
 				Selling sell = new Selling();
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				sell.setBookID(Integer.parseInt(bookID.getText()));
+				sell.setBookID(Integer.parseInt(textSell.getText()));
 				
 				ConnectionSQL conSQL = new ConnectionSQL();
 				Connection con = null;
@@ -254,9 +261,9 @@ public class SellForm {
 
 					con = DriverManager.getConnection(DB_URL,USER , PASS);
 
-					String sql = "Delete from Selling where BookID = ?";
+					String sql = "Delete from Selling where SellID = ?";
 					st = con.prepareStatement(sql);		
-					st.setInt(1, Integer.parseInt(bookID.getText()));
+					st.setInt(1, Integer.parseInt(textSell.getText()));
 					st.execute();
                     int rs = st.executeUpdate();
 					
@@ -276,12 +283,13 @@ public class SellForm {
 					conSQL.rs = conSQL.st.executeQuery("select * from Selling");
 					
 					while(conSQL.rs.next()) {
-						int BookID = conSQL.rs.getInt(1);
-						int Price = conSQL.rs.getInt(2);
-						int Quantity = conSQL.rs.getInt(3);
-						String Date = conSQL.rs.getString(4);
+						int SellID = conSQL.rs.getInt(1);
+						int BookID = conSQL.rs.getInt(2);
+						int Price = conSQL.rs.getInt(3);
+						int Quantity = conSQL.rs.getInt(4);
+						String Date = conSQL.rs.getString(5);
 						
-						Object[] content = {BookID, Price, Quantity, Date};
+						Object[] content = {SellID, BookID, Price, Quantity, Date};
 						
 						model.addRow(content);
 					}
@@ -291,7 +299,7 @@ public class SellForm {
 				}
 			}
 		});
-		btnDelete.setBounds(143, 281, 91, 27);
+		btnDelete.setBounds(139, 334, 91, 27);
 		selling.getContentPane().add(btnDelete);
 		
 		JPanel panelTable = new JPanel();
@@ -310,14 +318,46 @@ public class SellForm {
 			new Object[][] {
 			},
 			new String[] {
-				"BookID", "Price", "Quantity", "Dates"
+				"Sell_ID", "BookID", "Price", "Quantity", "Dates"
 			}
 		));
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		ConnectionSQL conSQL = new ConnectionSQL();
+		try {
+			conSQL.rs = conSQL.st.executeQuery("select * from Selling");
+			
+			while(conSQL.rs.next()) {
+				
+				int iSellID = conSQL.rs.getInt(1);
+				int iBookID = conSQL.rs.getInt(2);
+				int iPrice = conSQL.rs.getInt(3);
+				int iQuantity = conSQL.rs.getInt(4);
+				String strDate = conSQL.rs.getString(5);
+				
+				Object[] content = {iSellID, iBookID, iPrice, iQuantity, strDate};
+				
+				model.addRow(content);
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		table.getColumnModel().getColumn(0).setPreferredWidth(137);
 		table.getColumnModel().getColumn(1).setPreferredWidth(91);
 		table.getColumnModel().getColumn(2).setPreferredWidth(106);
 		table.getColumnModel().getColumn(3).setPreferredWidth(92);
 		scrollPane.setViewportView(table);
+		
+		JLabel lblSellid = new JLabel("Sell_ID");
+		lblSellid.setBounds(37, 78, 69, 20);
+		selling.getContentPane().add(lblSellid);
+		
+		textSell = new JTextField();
+		textSell.setBounds(121, 75, 195, 26);
+		selling.getContentPane().add(textSell);
+		textSell.setColumns(10);
 	}
 
 	public JFrame getSelling() {

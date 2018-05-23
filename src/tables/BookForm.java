@@ -417,6 +417,28 @@ public class BookForm {
 				"Name", "BookID", "Author", "Type", "Publisher", "Quantity"
 			}
 		));
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			ConnectionSQL conSQL = new ConnectionSQL();
+			model.setRowCount(0);
+			try {
+				conSQL.rs = conSQL.st.executeQuery("select * from BookInfo");
+				
+				while(conSQL.rs.next()) {
+					String BookName = conSQL.rs.getString(1);
+					int BookID = conSQL.rs.getInt(2);
+					String Author = conSQL.rs.getString(3);
+					String Type = conSQL.rs.getString(4);
+					String Publisher = conSQL.rs.getString(5);
+					int Quantity = conSQL.rs.getInt(6);
+					
+					Object[] content = {BookName, BookID, Author, Type, Publisher, Quantity};
+					
+					model.addRow(content);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		table.getColumnModel().getColumn(0).setPreferredWidth(137);
 		table.getColumnModel().getColumn(1).setPreferredWidth(91);
 		table.getColumnModel().getColumn(2).setPreferredWidth(106);

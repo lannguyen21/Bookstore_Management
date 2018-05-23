@@ -32,7 +32,7 @@ public class SearchSelling {
 		this.searchSell = searchSell;
 	}
 
-	private JTextField textBookID;
+	private JTextField textSell_ID;
 	private JTable table;
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -74,15 +74,15 @@ public class SearchSelling {
 		searchSell.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		searchSell.getContentPane().setLayout(null);
 		
-		textBookID = new JTextField();
-		textBookID.setColumns(10);
-		textBookID.setBounds(114, 100, 257, 27);
-		searchSell.getContentPane().add(textBookID);
+		textSell_ID = new JTextField();
+		textSell_ID.setColumns(10);
+		textSell_ID.setBounds(114, 100, 257, 27);
+		searchSell.getContentPane().add(textSell_ID);
 		
-		Label bookID = new Label("BookID");
-		bookID.setFont(new Font("Dialog", Font.PLAIN, 16));
-		bookID.setBounds(10, 100, 77, 27);
-		searchSell.getContentPane().add(bookID);
+		Label sellID = new Label("Sell_ID");
+		sellID.setFont(new Font("Dialog", Font.PLAIN, 16));
+		sellID.setBounds(10, 100, 77, 27);
+		searchSell.getContentPane().add(sellID);
 		
 		Button search = new Button("Search");
 		search.addActionListener(new ActionListener() {
@@ -98,20 +98,21 @@ public class SearchSelling {
 					con = DriverManager.getConnection(DB_URL,USER , PASS);
 
 					String sql;
-					sql = "select * from Selling where BookID = ?";
+					sql = "select * from Selling where SellID = ?";
 					st = con.prepareStatement(sql);
-					st.setString(1, textBookID.getText());
+					st.setString(1, textSell_ID.getText());
 					ResultSet rs = st.executeQuery();
 					
 					model.setRowCount(0);
 					try {	
 						while(rs.next()) {
-							int BookID = rs.getInt(1);
-							int Price = rs.getInt(2);
-							int Quantity = rs.getInt(3);
-							String Date = rs.getString(4);
+							int SellID = rs.getInt(1);
+							int BookID = rs.getInt(2);
+							int Price = rs.getInt(3);
+							int Quantity = rs.getInt(4);
+							String Date = rs.getString(5);
 							
-							Object[] content = {BookID, Price, Quantity, Date};
+							Object[] content = {SellID, BookID, Price, Quantity, Date};
 							
 							model.addRow(content);
 							}
@@ -191,10 +192,10 @@ public class SearchSelling {
 			new Object[][] {
 			},
 			new String[] {
-				"BookID", "Price", "Quantity", "Dates"
+				"Sell_ID", "BookID", "Price", "Quantity", "Dates"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(137);
+		table.getColumnModel().getColumn(0).setPreferredWidth(102);
 		table.getColumnModel().getColumn(1).setPreferredWidth(91);
 		table.getColumnModel().getColumn(2).setPreferredWidth(106);
 		table.getColumnModel().getColumn(3).setPreferredWidth(92);

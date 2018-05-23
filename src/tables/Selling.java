@@ -1,6 +1,13 @@
 package tables;
 
 public class Selling {
+	private int sellID;
+	public int getSellID() {
+		return sellID;
+	}
+	public void setSellID(int sellID) {
+		this.sellID = sellID;
+	}
 	private int bookID;
 	private int price;
 	private int quantity;
